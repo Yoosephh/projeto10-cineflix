@@ -1,26 +1,47 @@
 import styled from "styled-components"
+import axios from "axios"
+import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 
-export default function HomePage() {
+
+export default function HomePage({filmID, setFilmID}) {
+    let divFilmes;
+    function GeraFilmes(){
+        
+        const [filme, setFilme] = React.useState([])
+        useEffect(() =>{
+        axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
+        .then((resp) => {
+            setFilme(() => {return resp.data})
+            
+        })
+        .catch((erro) =>{
+            console.log(erro.data)
+        })}, [])
+        const returnFilmes = [...filme]
+        console.log(returnFilmes)
+        divFilmes = returnFilmes.map(item =>{
+            
+            return(
+                <Link 
+                onClick={() => setFilmID(()=> {return item.id})} 
+                key={item.id} 
+                to={`/sessoes/${item.id}`}>
+                    <MovieContainer >
+                        <img src={item.posterURL}/>
+                    </MovieContainer>
+                </Link>
+                )
+        })       
+    }
+    
+    GeraFilmes()
     return (
         <PageContainer>
             Selecione o filme
 
             <ListContainer>
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
-
-                <MovieContainer>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster"/>
-                </MovieContainer>
+                {divFilmes}
             </ListContainer>
 
         </PageContainer>
