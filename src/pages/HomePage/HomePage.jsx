@@ -4,7 +4,7 @@ import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
 
-export default function HomePage({filmID, setFilmID}) {
+export default function HomePage() {
     let divFilmes;
     function GeraFilmes(){
         
@@ -12,19 +12,16 @@ export default function HomePage({filmID, setFilmID}) {
         useEffect(() =>{
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
         .then((resp) => {
-            setFilme(() => {return resp.data})
-            
-        })
+            setFilme(() => {return resp.data})})
         .catch((erro) =>{
-            console.log(erro.data)
-        })}, [])
-        const returnFilmes = [...filme]
-        console.log(returnFilmes)
-        divFilmes = returnFilmes.map(item =>{
-            
+            console.log(erro.data)})}
+
+            , [])
+
+        if(filme){
+        divFilmes = filme.map(item =>{
             return(
                 <Link 
-                onClick={() => setFilmID(()=> {return item.id})} 
                 key={item.id} 
                 to={`/sessoes/${item.id}`}>
                     <MovieContainer >
@@ -32,18 +29,16 @@ export default function HomePage({filmID, setFilmID}) {
                     </MovieContainer>
                 </Link>
                 )
-        })       
+        })} else divFilmes = "Carregando..."       
     }
     
     GeraFilmes()
     return (
         <PageContainer>
             Selecione o filme
-
             <ListContainer>
                 {divFilmes}
             </ListContainer>
-
         </PageContainer>
     )
 }

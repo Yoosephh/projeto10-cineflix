@@ -1,54 +1,108 @@
+import axios from "axios"
+import React,{ useEffect } from "react"
+import { useParams, useNavigate } from "react-router-dom"
 import styled from "styled-components"
+import SeatItems from "./SeatsItems"
 
-export default function SeatsPage() {
+export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setName, setSeatNum, seatNum}) {
+    const [seats, setSeats] = React.useState([])
+    const parametros = useParams()
+
+    const navigate = useNavigate();
+
+    useEffect(() =>{
+        axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/showtimes/${parametros.idSessao}/seats`)
+        .then((resp) => {
+            setSeats(() => {return resp.data})
+        })
+        .catch((erro) =>{
+            console.log(erro.data)
+        })}, [parametros.idSessao])
+
+        let footerContainer = "";
+        if(seats.movie){
+            footerContainer = (
+            <FooterContainer>
+                <div>
+                    <img src={seats.movie.posterURL} alt="poster" />
+                </div>
+                <div>
+                    <p>{seats.movie.title}</p>
+                    <p>{seats.day.weekday} - {seats.name}</p>
+                </div>
+            </FooterContainer>
+        )
+    }
+    function submitForm(event){
+        event.preventDefault();
+        
+        const newPost = {
+        ids: seatsID,
+        name: name,
+        cpf: cpf
+        }
+
+        if(newPost.ids.length > 0) {
+            if(cpf.length === 11){
+                axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", newPost)
+                .then(()=> {
+                    navigate('/sucesso')
+                })
+                .catch(erro => {
+                    console.log(erro.response)
+                })
+            }else alert('Por favor, digite seu cpf (11 digitos)')
+        }else alert('Por favor, selecione um assento')
+    }
 
     return (
         <PageContainer>
             Selecione o(s) assento(s)
-
+            
             <SeatsContainer>
-                <SeatItem>01</SeatItem>
-                <SeatItem>02</SeatItem>
-                <SeatItem>03</SeatItem>
-                <SeatItem>04</SeatItem>
-                <SeatItem>05</SeatItem>
+                <SeatItems seats={seats.seats} seatsID={seatsID} setSeatsID={setSeatsID} seatNum={seatNum} setSeatNum={setSeatNum}/>
             </SeatsContainer>
 
             <CaptionContainer>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle className="selecionado" />
                     Selecionado
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle className="disponivel" />
                     Disponível
                 </CaptionItem>
                 <CaptionItem>
-                    <CaptionCircle />
+                    <CaptionCircle className="indisponivel" />
                     Indisponível
                 </CaptionItem>
             </CaptionContainer>
 
             <FormContainer>
-                Nome do Comprador:
-                <input placeholder="Digite seu nome..." />
+                <form onSubmit={submitForm}>
+                    <label htmlFor="nome">Nome do Comprador:</label>
+                    <input placeholder="Digite seu nome..." 
+                    name="nome" 
+                    type="text" 
+                    required
+                    id="nome"
+                    value={name}
+                    onChange={e => setName(e.target.value)} />
 
-                CPF do Comprador:
-                <input placeholder="Digite seu CPF..." />
+                    <label htmlFor="cpf">CPF do Comprador:</label>
+                    <input placeholder="Digite seu CPF..." 
+                    name="CPF" 
+                    required 
+                    type="number"
+                    id="cpf"
+                    value={cpf}
+                    onChange={e => setCPF(e.target.value)}/>
 
-                <button>Reservar Assento(s)</button>
+                    <button type="submit">Reservar Assento(s)</button>
+                </form>
             </FormContainer>
 
-            <FooterContainer>
-                <div>
-                    <img src={"https://br.web.img2.acsta.net/pictures/22/05/16/17/59/5165498.jpg"} alt="poster" />
-                </div>
-                <div>
-                    <p>Tudo em todo lugar ao mesmo tempo</p>
-                    <p>Sexta - 14h00</p>
-                </div>
-            </FooterContainer>
-
+            {footerContainer}
         </PageContainer>
     )
 }
@@ -73,6 +127,24 @@ const SeatsContainer = styled.div`
     align-items: center;
     justify-content: center;
     margin-top: 20px;
+    .selecionado{
+        background: #1AAE9E;
+        border: 1px solid #0E7D71;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+    .disponivel{
+        background: #C3CFD9;
+        border: 1px solid #808F9D;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+    .indisponivel {
+        background: #FBE192;
+        border: 1px solid #F7C52B;
+        border-radius: 17px;
+        box-sizing: border-box;
+    }
 `
 const FormContainer = styled.div`
     width: calc(100vw - 40px); 
@@ -96,8 +168,8 @@ const CaptionContainer = styled.div`
     margin: 20px;
 `
 const CaptionCircle = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
+    border: 1px solid blue;         
+    background-color: lightblue;    
     height: 25px;
     width: 25px;
     border-radius: 25px;
@@ -111,20 +183,27 @@ const CaptionItem = styled.div`
     flex-direction: column;
     align-items: center;
     font-size: 12px;
+    
+    .selecionado{
+        background: #1AAE9E;
+        border: 1px solid #0E7D71;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+    .disponivel{
+        background: #C3CFD9;
+        border: 1px solid #808F9D;
+        border-radius: 12px;
+        box-sizing: border-box;
+    }
+    .indisponivel {
+        background: #FBE192;
+        border: 1px solid #F7C52B;
+        border-radius: 17px;
+        box-sizing: border-box;
+    }
 `
-const SeatItem = styled.div`
-    border: 1px solid blue;         // Essa cor deve mudar
-    background-color: lightblue;    // Essa cor deve mudar
-    height: 25px;
-    width: 25px;
-    border-radius: 25px;
-    font-family: 'Roboto';
-    font-size: 11px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin: 5px 3px;
-`
+
 const FooterContainer = styled.div`
     width: 100%;
     height: 120px;

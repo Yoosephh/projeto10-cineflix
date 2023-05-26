@@ -1,7 +1,7 @@
 import styled from "styled-components"
 
-export default function SuccessPage() {
-
+export default function SuccessPage({name, cpf}) {
+    
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
@@ -21,8 +21,8 @@ export default function SuccessPage() {
 
             <TextContainer>
                 <strong><p>Comprador</p></strong>
-                <p>Nome: Letícia Chijo</p>
-                <p>CPF: 123.456.789-10</p>
+                <p>Nome: {name}</p>
+                <p>CPF: {cpf}</p>
             </TextContainer>
 
             <button>Voltar para Home</button>

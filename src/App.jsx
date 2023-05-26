@@ -9,8 +9,11 @@ import React from "react"
 
 export default function App() {
     axios.defaults.headers.common['Authorization'] = 'oeo6PR6eeMEhAS8MNcbBRwIB';
-    const [filmID, setFilmID] = React.useState("")
-    const [sessionID, setSessionID] = React.useState("")
+    const [seatNum, setSeatNum] = React.useState([]);
+    const [seatsID, setSeatsID] = React.useState([]);
+    const [name, setName] = React.useState("");
+    const [cpf, setCPF] = React.useState("");
+    console.log(seatNum)
     return (
         <BrowserRouter>
 
@@ -18,10 +21,10 @@ export default function App() {
 
             <Routes>
 
-                <Route path="/" element={<HomePage filmID={filmID} setFilmID={setFilmID} />} />
-                <Route path={`/sessoes/${filmID}/`} element={<SessionsPage filmID={filmID} sessionID={sessionID} setSessionID={setSessionID}/>} />
-                <Route path="/assentos/idSessao/" element={<SeatsPage />} />
-                <Route path="/sucesso/" element={<SuccessPage />} />
+                <Route path="/" element={<HomePage  />} />
+                <Route path={`/sessoes/:idFilme/`} element={<SessionsPage />} />
+                <Route path={`/assentos/:idSessao/`} element={<SeatsPage seatNum={seatNum} setSeatNum={setSeatNum} name={name} setName={setName} cpf={cpf} setCPF={setCPF} seatsID={seatsID} setSeatsID={setSeatsID}/>} />
+                <Route path="/sucesso" element={<SuccessPage cpf={cpf} name={name} seatNum={seatNum}/>} />
                 
             </Routes>
 
