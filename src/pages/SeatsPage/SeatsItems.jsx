@@ -51,6 +51,7 @@ export default function SeatItems({seats, setSeatsID, seatsID, setSeatNum, seatN
         let seatItems = seatStates.map((s, index) => (
         
         <SeatItem
+            data-test="seat"
             className={s.className}
             key={s.id}
             onClick={() => handleSeatClick(s.id, index)}

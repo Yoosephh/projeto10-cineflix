@@ -22,7 +22,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
         let footerContainer = "";
         if(seats.movie){
             footerContainer = (
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={seats.movie.posterURL} alt="poster" />
                 </div>
@@ -82,6 +82,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
                 <form onSubmit={submitForm}>
                     <label htmlFor="nome">Nome do Comprador:</label>
                     <input placeholder="Digite seu nome..." 
+                    data-test="client-name"
                     name="nome" 
                     type="text" 
                     required
@@ -91,6 +92,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
 
                     <label htmlFor="cpf">CPF do Comprador:</label>
                     <input placeholder="Digite seu CPF..." 
+                    data-test="client-cpf"
                     name="CPF" 
                     required 
                     type="number"
@@ -98,7 +100,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
                     value={cpf}
                     onChange={e => setCPF(e.target.value)}/>
 
-                    <button type="submit">Reservar Assento(s)</button>
+                    <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
                 </form>
             </FormContainer>
 

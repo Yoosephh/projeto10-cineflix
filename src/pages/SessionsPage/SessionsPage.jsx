@@ -21,12 +21,12 @@ export default function SessionsPage({setSessionID}) {
         if (sessions && sessions.days) {
             divHorarios = sessions.days.map((item, index) => {
                 return(
-                    <SessionContainer key={index}>
+                    <SessionContainer key={index} data-test="movie-day">
                     {item.weekday} - {item.date}
                         <ButtonsContainer>
                             {item.showtimes.map((itens)=> {
                                 return (
-                                    <Link 
+                                    <Link data-test="showtime"
                                     key={itens.id}
                                     onClick={() => setSessionID(()=> {return itens.id})}
                                     to={`/assentos/${itens.id}`}>
@@ -47,7 +47,7 @@ export default function SessionsPage({setSessionID}) {
                 {divHorarios}
             </div>
 
-            <FooterContainer>
+            <FooterContainer data-test="footer">
                 <div>
                     <img src={sessions.posterURL} alt="poster" />
                 </div>
