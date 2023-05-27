@@ -28,7 +28,7 @@ export default function SessionsPage({setSessionID}) {
                                 return (
                                     <Link data-test="showtime"
                                     key={itens.id}
-                                    onClick={() => setSessionID(()=> {return itens.id})}
+                                    onClick={() => setSessionID(itens.id)}
                                     to={`/assentos/${itens.id}`}>
                                         <button >{itens.name}</button>
                                     </Link>
