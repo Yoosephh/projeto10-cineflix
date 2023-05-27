@@ -4,7 +4,7 @@ import SeatsPage from "./pages/SeatsPage/SeatsPage"
 import SessionsPage from "./pages/SessionsPage/SessionsPage"
 import SuccessPage from "./pages/SuccessPage/SuccessPage"
 import axios from "axios"
-import { Route, Routes, BrowserRouter, useNavigate } from "react-router-dom"
+import { Route, Routes, BrowserRouter} from "react-router-dom"
 import React from "react"
 
 export default function App() {
