@@ -88,7 +88,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
                     required
                     id="nome"
                     value={name}
-                    onChange={(e) => setName(e.target.value)} />
+                    onChange={(event) => setName(event.target.value)}/>
 
                     <label htmlFor="cpf">CPF do Comprador:</label>
                     <input placeholder="Digite seu CPF..." 
@@ -98,7 +98,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
                     type="number"
                     id="cpf"
                     value={cpf}
-                    onChange={(e) => setCPF(e.target.value)}/>
+                    onChange={(event) => setCPF(event.target.value)}/>
 
                     <button type="submit" data-test="book-seat-btn">Reservar Assento(s)</button>
                 </form>
