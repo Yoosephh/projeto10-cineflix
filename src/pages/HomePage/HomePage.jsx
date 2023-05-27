@@ -3,7 +3,6 @@ import axios from "axios"
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 
-
 export default function HomePage() {
     let divFilmes;
     function GeraFilmes(){
@@ -13,6 +12,7 @@ export default function HomePage() {
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
         .then((resp) => {
             setFilme(() => {return resp.data})})
+
         .catch((erro) =>{
             console.log(erro.data)})}
 

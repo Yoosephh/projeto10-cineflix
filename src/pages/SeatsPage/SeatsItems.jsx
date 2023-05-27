@@ -3,7 +3,6 @@ import styled from "styled-components";
 
 export default function SeatItems({seats, setSeatsID, seatsID, setSeatNum, seatNum}) {
     if(seats) {
-
     const [seatStates, setSeatStates] = useState(seats.map(s => ({
         id: s.id,
         className: s.isAvailable ? 'disponivel' : 'indisponivel',

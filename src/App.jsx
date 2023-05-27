@@ -13,7 +13,7 @@ export default function App() {
     const [seatsID, setSeatsID] = React.useState([]);
     const [name, setName] = React.useState("");
     const [cpf, setCPF] = React.useState("");
-    console.log(seatNum)
+
     return (
         <BrowserRouter>
 

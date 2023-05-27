@@ -6,14 +6,14 @@ import styled from "styled-components"
 let divHorarios;
 export default function SessionsPage({setSessionID}) {
     const parametros = useParams()
-
-
     const [sessions, setSessions] = React.useState([])
+
     useEffect(() =>{
         axios.get(`https://mock-api.driven.com.br/api/v8/cineflex/movies/${parametros.idFilme}/showtimes`)
         .then((resp) => {
             setSessions(() => {return resp.data})
         })
+
         .catch((erro) =>{
             console.log(erro.data)
         })}, [parametros.idFilme])
@@ -89,6 +89,20 @@ const ButtonsContainer = styled.div`
     margin: 20px 0;
     button {
         margin-right: 20px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        height: 45px;
+        width: 80px;
+        color: #FFFFFF;
+        background: #E8833A;
+        border-radius: 3px;
+        border: 1px solid #9EADBA;
+        cursor: pointer;
     }
     a {
         text-decoration: none;
@@ -104,6 +118,8 @@ const FooterContainer = styled.div`
     font-size: 20px;
     position: fixed;
     bottom: 0;
+    background: #DFE6ED;
+    border: 1px solid #9EADBA;
 
     div:nth-child(1) {
         box-shadow: 0px 2px 4px 2px #0000001A;

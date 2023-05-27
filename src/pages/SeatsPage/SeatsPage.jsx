@@ -5,8 +5,8 @@ import styled from "styled-components"
 import SeatItems from "./SeatsItems"
 
 export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setName, setSeatNum, seatNum}) {
-    const [seats, setSeats] = React.useState([])
-    const parametros = useParams()
+    const [seats, setSeats] = React.useState([]);
+    const parametros = useParams();
 
     const navigate = useNavigate();
 
@@ -46,7 +46,7 @@ export default function SeatsPage({seatsID, setSeatsID, cpf, setCPF, name, setNa
             if(cpf.length === 11){
                 axios.post("https://mock-api.driven.com.br/api/v8/cineflex/seats/book-many", newPost)
                 .then(()=> {
-                    navigate('/sucesso')
+                    navigate('/sucesso',{state:{movie: seats.movie.title , time:seats.name , day: seats.day.date}})
                 })
                 .catch(erro => {
                     console.log(erro.response)
@@ -154,7 +154,21 @@ const FormContainer = styled.div`
     margin: 20px 0;
     font-size: 18px;
     button {
-        align-self: center;
+        margin-top: 50px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        height: 45px;
+        width: 230px;
+        color: #FFFFFF;
+        background: #E8833A;
+        border-radius: 3px;
+        border: 1px solid #9EADBA;
+        cursor: pointer;
     }
     input {
         width: calc(100vw - 60px);

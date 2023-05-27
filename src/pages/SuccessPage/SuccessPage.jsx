@@ -1,22 +1,30 @@
+import { Link, useLocation } from "react-router-dom"
 import styled from "styled-components"
 
-export default function SuccessPage({name, cpf}) {
-    
+export default function SuccessPage({name, cpf, seatNum}) {
+    const location = useLocation();
+    const {movie, time, day} = location.state;
+
+        let seatNumDiv = seatNum.map(ticket => {
+        return (
+            <p key={ticket}>Assento {ticket}</p>
+        )
+    })
     return (
         <PageContainer>
             <h1>Pedido feito <br /> com sucesso!</h1>
 
             <TextContainer>
                 <strong><p>Filme e sessão</p></strong>
-                <p>Tudo em todo lugar ao mesmo tempo</p>
-                <p>03/03/2023 - 14:00</p>
+                <p>{movie}</p>
+                <p>{day} - {time}</p>
             </TextContainer>
 
             <TextContainer>
                 <strong><p>Ingressos</p></strong>
-                <p>Assento 01</p>
-                <p>Assento 02</p>
-                <p>Assento 03</p>
+
+                {seatNumDiv}
+
             </TextContainer>
 
             <TextContainer>
@@ -25,7 +33,9 @@ export default function SuccessPage({name, cpf}) {
                 <p>CPF: {cpf}</p>
             </TextContainer>
 
-            <button>Voltar para Home</button>
+            <Link to="/">
+                <button>Voltar para Home</button>
+            </Link>
         </PageContainer>
     )
 }
@@ -45,6 +55,20 @@ const PageContainer = styled.div`
     }
     button {
         margin-top: 50px;
+        font-family: 'Roboto';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 18px;
+        line-height: 21px;
+        text-align: center;
+        letter-spacing: 0.02em;
+        height: 45px;
+        width: 230px;
+        color: #FFFFFF;
+        background: #E8833A;
+        border-radius: 3px;
+        border: 1px solid #9EADBA;
+        cursor: pointer;
     }
     h1 {
         font-family: 'Roboto';
