@@ -1,25 +1,24 @@
 import styled from "styled-components"
 import axios from "axios"
-import React, { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function HomePage() {
-    let divFilmes;
-    function GeraFilmes(){
-        
-        const [filme, setFilme] = React.useState([])
-        useEffect(() =>{
+    const [filmes, setFilmes] = useState([]);
+    useEffect(() =>{
         axios.get("https://mock-api.driven.com.br/api/v8/cineflex/movies")
         .then((resp) => {
-            setFilme(() => {return resp.data})})
+            setFilmes(resp.data)})
 
         .catch((erro) =>{
             console.log(erro.data)})}
 
             , [])
 
-        if(filme){
-        divFilmes = filme.map(item =>{
+    function RenderizaFilmes(){
+        
+        if(filmes.length){
+        return filmes.map(item =>{
             return(
                 <Link 
                 key={item.id} 
@@ -29,15 +28,15 @@ export default function HomePage() {
                     </MovieContainer>
                 </Link>
                 )
-        })} else divFilmes = "Carregando..."       
+        })} 
+        return <img src="https://cineflex-hardh7xm0-thalesgomest.vercel.app/static/media/loading.961a48fb.gif" alt="carregando" width={64}/>     
     }
     
-    GeraFilmes()
     return (
         <PageContainer>
             Selecione o filme
             <ListContainer>
-                {divFilmes}
+                {RenderizaFilmes()}
             </ListContainer>
         </PageContainer>
     )
@@ -60,6 +59,9 @@ const ListContainer = styled.div`
     flex-wrap: wrap;
     flex-direction: row;
     padding: 10px;
+    justify-content: center;
+    align-items: center;
+    height: calc(100vh - 160px);
 `
 const MovieContainer = styled.div`
     width: 145px;
